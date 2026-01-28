@@ -1,0 +1,9 @@
+{
+	"name": "airbnbdatfactory",
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "62be82a6-c94b-48b0-8d7b-26a90cc28ae8",
+		"tenantId": "94371433-f1d2-40c5-bac3-885a2e0df478"
+	}
+}
