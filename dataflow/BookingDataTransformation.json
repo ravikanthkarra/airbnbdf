@@ -48,7 +48,7 @@
 				"          full_address = concat(property_location.city,',',property_location.country),",
 				"          city = property_location.city,",
 				"          country = property_location.country,",
-				"          booking_id = booking_id,",
+				"          booking_id = id,",
 				"          column7 = ERROR_FUNCTION('')) ~> DerivedColumn"
 			]
 		}
