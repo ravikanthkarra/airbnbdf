@@ -51,23 +51,6 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "set_variable",
-							"type": "SetVariable",
-							"dependsOn": [],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "test",
-								"value": {
-									"value": "@item().name",
-									"type": "Expression"
-								}
-							}
-						},
-						{
 							"name": "UpsertInSynapse",
 							"type": "Copy",
 							"dependsOn": [],
