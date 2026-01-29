@@ -10,6 +10,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "BookingData"
+				},
+				{
+					"dataset": {
+						"referenceName": "BookingsFactDataSynapse",
+						"type": "DatasetReference"
+					},
+					"name": "SynapseForLookUp"
 				}
 			],
 			"sinks": [],
@@ -19,6 +26,9 @@
 				},
 				{
 					"name": "DerivedColumn"
+				},
+				{
+					"name": "LookUpSynapse"
 				}
 			],
 			"scriptLines": [
@@ -41,6 +51,29 @@
 				"     enableChangeFeed: true,",
 				"     changeFeedStartFromTheBeginning: true,",
 				"     format: 'document') ~> BookingData",
+				"source(output(",
+				"          booking_id as string,",
+				"          property_id as string,",
+				"          customer_id as integer,",
+				"          owner_id as string,",
+				"          check_in_date as date,",
+				"          check_out_date as date,",
+				"          booking_date as timestamp,",
+				"          amount as double,",
+				"          currency as string,",
+				"          city as string,",
+				"          country as string,",
+				"          full_address as string,",
+				"          stay_duration as long,",
+				"          booking_year as integer,",
+				"          booking_month as integer,",
+				"          timestamp as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table',",
+				"     staged: true) ~> SynapseForLookUp",
 				"BookingData split(check_out_date<check_in_date,",
 				"     disjoint: true) ~> DataQualityCheck@(BadRecords, AcceptedRecords)",
 				"DataQualityCheck@AcceptedRecords derive(stay_duration = toTimestamp(check_out_date) - toTimestamp(check_in_date),",
@@ -55,7 +88,12 @@
 				"          check_in_date = check_in_date,",
 				"          property_id = property_id,",
 				"          amount = amount,",
-				"          currency = currency) ~> DerivedColumn"
+				"          currency = currency) ~> DerivedColumn",
+				"DerivedColumn, SynapseForLookUp lookup(DerivedColumn@booking_id == SynapseForLookUp@booking_id,",
+				"     multiple: false,",
+				"     pickup: 'first',",
+				"     desc(SynapseForLookUp@timestamp, true),",
+				"     broadcast: 'auto')~> LookUpSynapse"
 			]
 		}
 	}
