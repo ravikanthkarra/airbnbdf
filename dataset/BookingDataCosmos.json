@@ -10,6 +10,9 @@
 		"schema": {
 			"type": "object",
 			"properties": {
+				"booking_id": {
+					"type": "string"
+				},
 				"property_id": {
 					"type": "string"
 				},

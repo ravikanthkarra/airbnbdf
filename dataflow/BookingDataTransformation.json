@@ -23,16 +23,17 @@
 			],
 			"scriptLines": [
 				"source(output(",
+				"          booking_id as string,",
 				"          property_id as string,",
-				"          customer_id as short,",
+				"          customer_id as integer,",
 				"          owner_id as string,",
 				"          check_in_date as date,",
 				"          check_out_date as date,",
-				"          booking_date as timestamp,",
+				"          booking_date as date,",
 				"          amount as double,",
 				"          currency as string,",
 				"          property_location as (city as string, country as string),",
-				"          timestamp as timestamp",
+				"          timestamp as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -48,8 +49,13 @@
 				"          full_address = concat(property_location.city,',',property_location.country),",
 				"          city = property_location.city,",
 				"          country = property_location.country,",
-				"          booking_id = id,",
-				"          column7 = ERROR_FUNCTION('')) ~> DerivedColumn"
+				"          booking_id = booking_id,",
+				"          booking_date = booking_date,",
+				"          check_out_date = check_out_date,",
+				"          check_in_date = check_in_date,",
+				"          property_id = property_id,",
+				"          amount = amount,",
+				"          currency = currency) ~> DerivedColumn"
 			]
 		}
 	}
