@@ -15,21 +15,24 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "split1"
+					"name": "DataQualityCheck"
+				},
+				{
+					"name": "DerivedColumn"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
 				"          property_id as string,",
-				"          customer_id as integer,",
+				"          customer_id as short,",
 				"          owner_id as string,",
-				"          check_in_date as string,",
-				"          check_out_date as string,",
-				"          booking_date as string,",
+				"          check_in_date as date,",
+				"          check_out_date as date,",
+				"          booking_date as timestamp,",
 				"          amount as double,",
 				"          currency as string,",
 				"          property_location as (city as string, country as string),",
-				"          timestamp as string",
+				"          timestamp as timestamp",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -38,7 +41,15 @@
 				"     changeFeedStartFromTheBeginning: true,",
 				"     format: 'document') ~> BookingData",
 				"BookingData split(check_out_date<check_in_date,",
-				"     disjoint: true) ~> split1@(BadRecords, AcceptedRecords)"
+				"     disjoint: true) ~> DataQualityCheck@(BadRecords, AcceptedRecords)",
+				"DataQualityCheck@AcceptedRecords derive(stay_duration = toTimestamp(check_out_date) - toTimestamp(check_in_date),",
+				"          booking_year = year(booking_date),",
+				"          column2 = ERROR_FUNCTION(''),",
+				"          column3 = ERROR_FUNCTION(''),",
+				"          column4 = ERROR_FUNCTION(''),",
+				"          column5 = ERROR_FUNCTION(''),",
+				"          column6 = ERROR_FUNCTION(''),",
+				"          column7 = ERROR_FUNCTION('')) ~> DerivedColumn"
 			]
 		}
 	}
