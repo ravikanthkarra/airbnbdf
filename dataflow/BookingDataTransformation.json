@@ -46,9 +46,9 @@
 				"          booking_year = year(booking_date),",
 				"          booking_month = month(booking_date),",
 				"          full_address = concat(property_location.city,',',property_location.country),",
-				"          column4 = ERROR_FUNCTION(''),",
-				"          column5 = ERROR_FUNCTION(''),",
-				"          column6 = ERROR_FUNCTION(''),",
+				"          city = property_location.city,",
+				"          country = property_location.country,",
+				"          booking_id = booking_id,",
 				"          column7 = ERROR_FUNCTION('')) ~> DerivedColumn"
 			]
 		}
