@@ -120,7 +120,7 @@
 									"referenceName": "AirBnBADLS",
 									"type": "LinkedServiceReference"
 								},
-								"folderPath": "airbnb"
+								"folderPath": "airbnb/synapse_runtime"
 							},
 							"compute": {
 								"coreCount": 8,
