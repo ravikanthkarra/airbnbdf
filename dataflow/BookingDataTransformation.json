@@ -37,7 +37,7 @@
 				"     enableChangeFeed: true,",
 				"     changeFeedStartFromTheBeginning: true,",
 				"     format: 'document') ~> BookingData",
-				"BookingData split(1>10,",
+				"BookingData split(check_out_date<check_in_date,",
 				"     disjoint: true) ~> split1@(BadRecords, AcceptedRecords)"
 			]
 		}
