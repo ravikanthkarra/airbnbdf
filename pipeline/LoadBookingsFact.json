@@ -23,7 +23,8 @@
 						"linkedService": {
 							"referenceName": "AirBnBADLS",
 							"type": "LinkedServiceReference"
-						}
+						},
+						"folderPath": "airbnb"
 					},
 					"compute": {
 						"coreCount": 8,
